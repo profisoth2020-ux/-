@@ -1,5 +1,5 @@
 {
-  "name": "BusFlow - Real-time Fleet Tracker",
+  "name": "BusFlow",
   "description": "A professional real-time bus tracking dashboard and driver management system with GPS integration.",
   "requestFramePermissions": [
     "geolocation",
