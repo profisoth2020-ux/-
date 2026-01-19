@@ -1,5 +1,5 @@
 {
-  "name": "BusFlow",
+  "name": "BusFlow-rayahine",
   "description": "A professional real-time bus tracking dashboard and driver management system with GPS integration.",
   "requestFramePermissions": [
     "geolocation",
