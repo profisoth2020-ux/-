@@ -43,7 +43,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ buses, drivers, activeT
 
   const handleAddBus = (newBus: Bus) => {
     setBuses(prev => [...prev, newBus]);
-    // تحديث حالة السائق إذا تم إسناد الحافلة له
     if (newBus.driverId) {
       setDrivers(prev => prev.map(d => 
         d.id === newBus.driverId ? { ...d, currentBusId: newBus.id } : d
@@ -53,20 +52,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ buses, drivers, activeT
 
   const handleUpdateBus = (updatedBus: Bus) => {
     setBuses(prev => prev.map(b => b.id === updatedBus.id ? updatedBus : b));
-    
-    // مزامنة حالة السائقين:
     setDrivers(prev => prev.map(d => {
-      // إذا كان السائق هو المختار الجديد للحافلة
-      if (d.id === updatedBus.driverId) {
-        return { ...d, currentBusId: updatedBus.id };
-      }
-      // إذا كان السائق مرتبطاً سابقاً بهذه الحافلة ولكن تم تغييره
-      if (d.currentBusId === updatedBus.id && d.id !== updatedBus.driverId) {
-        return { ...d, currentBusId: undefined };
-      }
+      if (d.id === updatedBus.driverId) return { ...d, currentBusId: updatedBus.id };
+      if (d.currentBusId === updatedBus.id && d.id !== updatedBus.driverId) return { ...d, currentBusId: undefined };
       return d;
     }));
-    
     setEditingBus(null);
   };
 
@@ -196,6 +186,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ buses, drivers, activeT
               drivers={drivers} 
               onAddDriver={() => setIsDriverModalOpen(true)}
              />
+          </div>
+        );
+      case 'history':
+        return (
+          <div className="p-8 max-w-6xl mx-auto text-center" dir="rtl">
+             <i className="fa-solid fa-clock-rotate-left text-6xl text-slate-200 mb-6"></i>
+             <h2 className="text-2xl font-black text-slate-800">سجل الرحلات المكتملة</h2>
+             <p className="text-slate-500 font-bold mt-2">لا توجد رحلات مؤرشفة في النظام حالياً.</p>
           </div>
         );
       case 'settings':
